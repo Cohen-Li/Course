@@ -3,4 +3,4 @@ django-ckeditor
 django-embed-video==1.4.8
 djangorestframework==3.14.0
 django-crispy-forms==1.14.0
-MySQL-python
+mysqlclient

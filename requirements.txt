@@ -1,5 +1,5 @@
 Django==3.2.4
-django-ckeditor==6.5.1
+django-ckeditor
 django-embed-video==1.4.8
 djangorestframework==3.14.0
 django-crispy-forms==1.14.0

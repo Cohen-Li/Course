@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+  Đã Register rồi
+{% else %}
+
+<style>img {width:50%;}</style>
+<section class="testimonial py-5" id="testimonial">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4 py-5 bg-primary text-white text-center ">
+                <div class=" ">
+                    <div class="card-body">
+                        <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" style="width:30%">
+                        <h2 class="py-3">Registration</h2>
+                        <p>Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 py-5 border">
+                <h4 class="pb-4">Please fill with your details</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input name="username" required id="id_username" placeholder="User name" class="form-control" type="text">
+                        </div> <br />
+                        <div class="form-group col-md-6">
+                          <input name="email" required id="id_email" class="form-control" placeholder="InsertEmail" type="email">
+                        </div>
+                      </div>
+                    <br />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input id="id_password" name="password" placeholder="Insert Password" class="form-control" required type="password">
+                        </div> <br />
+                        <div class="form-group col-md-6">
+                            <input id="id_re_password" name="re_password" placeholder="Re_Password" class="form-control" required type="password">
+                        </div>
+                        <br />
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-sm btn-primary">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% comment %} <form method="post">
+    {% csrf_token %}
+    {{ formKey }}
+    <button type="submit" class="btn btn-sm btn-danger">Đăng ký</button>
+</form> {% endcomment %}
+{% endif %}
+{% endblock %}

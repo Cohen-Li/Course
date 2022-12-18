@@ -1,0 +1,81 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for coursesFilIds in coursesFilId %}
+              <div class="col">
+                  <div class="card shadow-sm">
+                      <img src="{{ coursesFilIds.image.url }}" alt="{{ coursesFilIds.subject }}" height="225px" />
+                      <div class="card-body">
+                          <p class="text-center">
+                              {% if user.is_authenticated or coursesFilIds.type == 0 %}
+                                  <a href="{% url 'products:detail' coursesFilIds.id %}">
+                                      {{coursesFilIds.subject }}
+                                  </a>
+                              {% else %}
+                                  {{coursesFilIds.subject }}
+                              {% endif %}
+                          </p>
+                          <p class="card-text">{{coursesFilIds.description | safe }}</p>
+                          <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                  {% if user.is_authenticated or coursesFilIds.type == 0 %}
+                                  <a href="{% url 'products:detail' coursesFilIds.id %}" role="button"\
+                                   class="btn btn-sm btn-outline-secondary">View</a>
+                                  {% else %}
+                                  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Get account</button>
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              Please login view video
+                                          </div>
+                                          <div class="modal-footer">
+                                          <a href="accounts/login" role="button" class="btn btn-primary">I see</a>
+                                          </div>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  {% endif %}
+                              </div>
+                              <small class="text-muted">Star: {{coursesFilIds.star }}</small>
+                          </div>
+                      </div>
+                      <div class="text-center"><strong>{{coursesFilIds.category }}</strong></div>
+                  </div>
+              </div>  
+          {% endfor %}
+    </div>
+    <br><hr>
+    <!-- This is paginator-->
+    <div class="text-end">
+      {% if coursesFilId.has_previous %}
+          <a class="btn btn-sm btn-outline-secondary" href="{{ request.path }}?page=1">Trang đầu</a>
+<!--              <a class="btn btn-sm btn-outline-secondary" href="{{ request.path }}?page={{ coursesDetailKey.previous_page_number }}">Trang trước</a>-->
+      {% endif %}
+
+      {% for i in coursesFilId.paginator.page_range %}
+        {% if coursesFilId.number == i %}
+          <a class="btn btn-sm btn-outline-primary active" href="{{ request.path }}?page={{ i }}">{{ i }}</a>
+        {% elif i > coursesFilId.number|add:'-10' and i < coursesFilId.number|add:'10' %}
+          <a class="btn btn-sm btn-outline-secondary active" href="{{ request.path }}?page={{ i }}">{{ i }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if coursesFilId.has_next %}
+<!--              <a class="btn btn-sm btn-outline-secondary" href="{{ request.path }}?page={{ coursesDetailKey.next_page_number }}">Tiếp theo</a>-->
+          <a class="btn btn-sm btn-outline-secondary" href="{{ request.path }}?page={{ coursesFilId.paginator.num_pages }}">Trang cuối</a>
+      {% endif %}
+  </div>
+  </div>
+</div>
+{% endblock %}
